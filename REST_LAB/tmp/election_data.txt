@@ -1,0 +1,9 @@
+[
+  {
+    "election_name": "ASC President",
+    "candidates_and_votes": {
+      "Wofa Yamoah": 1,
+      "Kwesi Jackson": 0
+    }
+  }
+]

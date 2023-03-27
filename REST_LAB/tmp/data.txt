@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Sarah Osei",
+    "voter_id": "1234",
+    "yeargroup": "2022",
+    "email": "sarah.osei@ashesi.edu.gh",
+    "major": "Business Administration"
+  }
+]
