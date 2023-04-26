@@ -70,6 +70,7 @@ def retrieve_user():
 @app.route('/Posts', methods=['POST'])
 def create_post():
     post_data = request.get_json()
+    record = json.loads(request.data)
     student_id = request.args.get('student_id')
     user_log = db.collection('Users')
     user = user_log.document(student_id).get()
@@ -77,12 +78,20 @@ def create_post():
         post_log = db.collection('Posts')
         post_data['timestamp'] = firestore.SERVER_TIMESTAMP
         post_log.add(post_data)
-        for users in user_log.stream():
-            userf = users.to_dict()
-            if userf['email'] == post_data.get('email'):
-                sender=userf['name']
-                continue
-            send_email(userf['email'], sender)
+        
+        sender = None  
+        for user_doc in user_log.stream():
+            userf = user_doc.to_dict()
+            if userf['email'] == record['email']:
+                sender = userf['name']
+                break  
+        
+        if sender is not None:
+            for user_doc in user_log.stream():
+                userf = user_doc.to_dict()
+                if userf['email'] != record['email']:
+                    send_email(userf['email'], sender)
+        
         return jsonify(post_data), 201
     return jsonify({'error': 'User not found or unauthorized'}), 404
 
@@ -97,6 +106,7 @@ def send_email(user_email, sender):
         }
     }
     db.collection('mail').add(data)
+
 
 
 #app.run(debug=True)
