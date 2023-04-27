@@ -120,7 +120,7 @@ def delete_election():
     return jsonify({'error': 'Election not found'}), 404
 
 
-#@app.route('/election', methods=['PUT'])paptf win wtf ped ttf
+#@app.route('/election', methods=['PUT'])
 def vote():
     voting_info = request.get_json()
     voter_id = voting_info['voter_id']
